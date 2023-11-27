@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +27,28 @@ namespace Beanfun
             {
                 DockPanel.SetDock(btn_Refresh_QRCode, Dock.Left);
                 qr_Tip.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void btn_Refresh_QRCode_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    break;
+                case MouseButton.Middle:
+                    App.MainWnd.getQRCodeURL();
+                    break;
+                case MouseButton.Right:
+                    App.MainWnd.getQRCodeImage();
+                    break;
+                case MouseButton.XButton1:
+                    break;
+                case MouseButton.XButton2:
+                    break;
+                default:
+                    break;
+               
             }
         }
 

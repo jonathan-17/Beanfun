@@ -42,7 +42,7 @@
     <system:String x:Key="Settings">设置</system:String>
     <system:String x:Key="Close">关闭</system:String>
     <system:String x:Key="CheckUpdate">检测更新</system:String>
-    <system:String x:Key="AboutText">&lt;R&gt;本程序&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;游戏橘子数位科技&lt;/B&gt;开发的官方客户端程序&lt;L/&gt;&lt;L/&gt;关于游戏账号使用第三方的方式登录请再三斟酌并且请确认您下载当前程序的途径是否安全&lt;L/&gt;&lt;L/&gt;程序使用部分BeanfunLogin的代码&lt;L/&gt;&lt;/R&gt;</system:String>
+    <system:String x:Key="AboutText" xml:space="preserve">&lt;R&gt;本程式&lt;B&gt;&lt;R Foreground="Red"&gt;不是&lt;/R&gt;遊戲橘子數位科技&lt;/B&gt;開發的官方客戶端程式&lt;L/&gt;&lt;L/&gt;關於遊戲帳號使用第三方的方式登入請再三斟酌並且請確認您下載當前程式的途徑是否安全&lt;L/&gt;&lt;L/&gt;程式使用部分BeanfunLogin的代碼&#x0a;&#x0a;你用的版本是Jonathan17的版本，可以快速複製QR&lt;L/&gt;&lt;/R&gt;</system:String>
     <system:String x:Key="Contact">联系开发者</system:String>
     <system:String x:Key="Email">发送邮件</system:String>
     <system:String x:Key="Donate">捐赠</system:String>
@@ -104,6 +104,7 @@
     <system:String x:Key="MsgDeleteAccountMulti">{0} 个账号</system:String>
     <system:String x:Key="MsgDeleteAccountSingle">账号「{0}」</system:String>
     <system:String x:Key="RefreshQRCode">重新加载</system:String>
+    <system:String x:Key="QRCodeHover" xml:space="preserve">F5及左鍵:重新取得QR&#13;F6及中鍵:複製QR網&#13;F7及右鍵:複製QR圖片</system:String>
     <system:String x:Key="RunLastGame">同时启动上次玩的游戏</system:String>
     <system:String x:Key="BackRegularLogin">返回一般登录</system:String>
     <system:String x:Key="Stable">稳定版</system:String>

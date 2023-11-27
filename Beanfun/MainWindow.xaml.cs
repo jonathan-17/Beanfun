@@ -12,15 +12,18 @@ using System.Linq;
 using System.Management;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Web.UI.WebControls;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Utility.ModifyRegistry;
+using ZXing;
 
 
 
@@ -93,6 +96,8 @@ namespace Beanfun
         public IniData INIData = null;
 
         public WindowAccentCompositor compositor = null;
+
+        public BarcodeReader BarcodeReader = null;
 
         public MainWindow()
         {
@@ -170,6 +175,11 @@ namespace Beanfun
             // 
             this.bfAPPAutoLogin.Interval = TimeSpan.FromSeconds(2);
             this.bfAPPAutoLogin.Tick += this.bfAPPAutoLogin_Tick;
+
+            //
+            // QR
+            //
+            this.BarcodeReader = new BarcodeReader();
 
             loginPage = new LoginPage();
             manageAccPage = new ManageAccount();
@@ -1900,7 +1910,7 @@ namespace Beanfun
         {
             loginPage.qr.btn_Refresh_QRCode.IsEnabled = false;
 
-            BitmapImage qrCodeImage;
+            BitmapImage qrCodeImage = null;
             bool result;
             if (this.qrcodeClass == null || (qrCodeImage = this.bfClient.getQRCodeImage(qrcodeClass)) == null)
             {
@@ -1913,8 +1923,35 @@ namespace Beanfun
                 loginPage.qr.qr_image.Source = qrCodeImage;
             }
             loginPage.qr.btn_Refresh_QRCode.IsEnabled = true;
-
+            
             return result;
+        }
+
+        public void getQRCodeImage()
+        {
+            Clipboard.SetImage((BitmapSource)loginPage.qr.qr_image.Source);
+        }
+        public void getQRCodeURL()
+        {
+            String qrURL = BarcodeReader.Decode((BitmapSource)loginPage.qr.qr_image.Source).Text;
+            Clipboard.SetText(qrURL);
+        }
+
+        private void MainKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key.ToString())
+            {
+                case "F5":
+                    refreshQRCode();
+                    break;
+                case "F6":
+                    String qrURL = BarcodeReader.Decode((BitmapSource)loginPage.qr.qr_image.Source).Text;
+                    Clipboard.SetText(qrURL);
+                    break;
+                case "F7":
+                    Clipboard.SetImage((BitmapSource)loginPage.qr.qr_image.Source);
+                    break;
+            }
         }
 
         private void bfAPPAutoLogin_Tick(object sender, EventArgs e)

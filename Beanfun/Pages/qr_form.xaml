@@ -60,7 +60,7 @@
             <StackPanel VerticalAlignment="Center">
                 <TextBlock MouseLeave="TextBlock_MouseLeave">
                 <DockPanel MinWidth="350">
-                    <Button x:Name="btn_Refresh_QRCode" Padding="0" Width="150" Height="150" ToolTip="{DynamicResource RefreshQRCode}" Click="btn_Refresh_QRCode_Click" DockPanel.Dock="Top" MouseEnter="btn_Refresh_QRCode_MouseEnter">
+                    <Button x:Name="btn_Refresh_QRCode" Padding="0" Width="150" Height="150" ToolTip="{DynamicResource QRCodeHover}" Click="btn_Refresh_QRCode_Click" DockPanel.Dock="Top" MouseEnter="btn_Refresh_QRCode_MouseEnter" MouseDown="btn_Refresh_QRCode_MouseDown">
                         <Image x:Name="qr_image" Cursor="Hand"/>
                     </Button>
                     <Button x:Name="qr_Tip" Style="{DynamicResource ButtonStyle}" Margin="30 0 0 0" Cursor="Hand" DockPanel.Dock="Right" Visibility="Collapsed" Click="qr_Tip_Click">
