@@ -104,7 +104,7 @@
     <system:String x:Key="MsgDeleteAccountMulti">{0} 个账号</system:String>
     <system:String x:Key="MsgDeleteAccountSingle">账号「{0}」</system:String>
     <system:String x:Key="RefreshQRCode">重新加载</system:String>
-    <system:String x:Key="QRCodeHover" xml:space="preserve">F5及左鍵:重新取得QR&#13;F6及中鍵:複製QR網&#13;F7及右鍵:複製QR圖片</system:String>
+    <system:String x:Key="QRCodeHover" xml:space="preserve">F5及左鍵:重新取得QR&#13;F6及中鍵:複製QR網址&#13;F7及右鍵:複製QR圖片</system:String>
     <system:String x:Key="RunLastGame">同时启动上次玩的游戏</system:String>
     <system:String x:Key="BackRegularLogin">返回一般登录</system:String>
     <system:String x:Key="Stable">稳定版</system:String>
