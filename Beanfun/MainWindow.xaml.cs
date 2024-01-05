@@ -1827,7 +1827,7 @@ namespace Beanfun
             }
 
             Console.WriteLine("getOtpWorker end");
-
+            Clipboard.SetText(accountList.t_Password.Text);
             accountList.list_Account.IsEnabled = true;
             accountList.btnGetOtp.IsEnabled = true;
             accountList.btn_Logout.IsEnabled = true;
