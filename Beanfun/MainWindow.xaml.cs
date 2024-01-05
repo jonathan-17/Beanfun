@@ -390,7 +390,7 @@ namespace Beanfun
                 get
                 {
                     if (xlarge_image == null)
-                        xlarge_image = loadImage($"{ imageBaseUrl }{ xlarge_image_name }");
+                        xlarge_image = loadImage(large_image_name);
                     return xlarge_image;
                 }
             }
@@ -399,7 +399,7 @@ namespace Beanfun
             public BitmapImage Large_image {
                 get {
                     if (large_image == null)
-                        large_image = loadImage($"{ imageBaseUrl }{ large_image_name }");
+                        large_image = loadImage(large_image_name);
                     return large_image;
                 }
             }
@@ -410,7 +410,7 @@ namespace Beanfun
                 get
                 {
                     if (small_image == null)
-                        small_image = loadImage($"{ imageBaseUrl }{ small_image_name }");
+                        small_image = loadImage(small_image_name);
                     return small_image;
                 }
             }
@@ -429,6 +429,10 @@ namespace Beanfun
 
             private BitmapImage loadImage(string url)
             {
+                if (!url.StartsWith("http://", StringComparison.OrdinalIgnoreCase) && !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                {
+                    url = $"{imageBaseUrl}{url}";
+                }
                 BitmapImage image;
                 try
                 {
@@ -611,23 +615,37 @@ namespace Beanfun
                 INIData = sip.ParseString(res);
 
                 res = Encoding.UTF8.GetString(wc.DownloadData("https://" + (App.LoginRegion == "HK" ? "bfweb.hk" : "tw") + ".beanfun.com/game_zone/"));
-                Regex reg = new Regex("Services.ServiceList = (.*);");
+                Regex reg = new Regex("Services\\.ServiceList = (.*);");
                 if (reg.IsMatch(res))
                 {
                     string json = reg.Match(res).Groups[1].Value;
-                    JObject o = JObject.Parse(json);
-                    foreach (var game in o["Rows"])
+                    bool newJson = new Regex("^\\[(.*)\\]$").IsMatch(json);
+                    Console.WriteLine(json);
+                    if (newJson)
                     {
-                        GameService gs = new GameService((string)game["ServiceFamilyName"], (string)game["ServiceCode"], (string)game["ServiceRegion"], (string)game["ServiceWebsiteURL"], (string)game["ServiceXLargeImageName"], (string)game["ServiceLargeImageName"], (string)game["ServiceSmallImageName"], (string)game["ServiceDownloadURL"]);
-                        gameList.Add(gs);
-                        if (gs.service_code == service_code && gs.service_region == service_region)
-                            SelectedGame = gs;
+                        JArray jsons = JArray.Parse(json);
+                        foreach (JObject game in jsons)
+                            AddGameServiceFromJson(gameList, game);
+                    }
+                    else
+                    {
+                        JObject o = JObject.Parse(json);
+                        foreach (JObject game in o["Rows"])
+                            AddGameServiceFromJson(gameList, game);
                     }
                 }
                 GameList.Add(App.LoginRegion.ToLower(), gameList);
             }
 
             selectedGameChanged();
+        }
+
+        private void AddGameServiceFromJson(List<GameService> gameList, JObject game)
+        {
+            GameService gs = new GameService((string)game["ServiceFamilyName"], (string)game["ServiceCode"], (string)game["ServiceRegion"], (string)game["ServiceWebsiteURL"], (string)game["ServiceXLargeImageName"], (string)game["ServiceLargeImageName"], (string)game["ServiceSmallImageName"], (string)game["ServiceDownloadURL"]);
+            gameList.Add(gs);
+            if (gs.service_code == service_code && gs.service_region == service_region)
+                SelectedGame = gs;
         }
 
         public void CheckUpdates(bool show)
